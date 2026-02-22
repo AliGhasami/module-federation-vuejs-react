@@ -1,3 +1,4 @@
+/*
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import federation from '@originjs/vite-plugin-federation'
@@ -29,4 +30,37 @@ export default defineConfig({
         minify: false,
         cssCodeSplit: false
     }
+})*/
+
+// react-remote/vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import {federation} from '@module-federation/vite'
+
+export default defineConfig({
+    plugins: [
+        react(),
+        federation({
+            name: 'remote_react',
+            filename: 'remoteEntry.js',
+            exposes: {
+                './SimpleButton': './src/SimpleButton.tsx',
+            },
+            shared: ['react', 'react-dom'],
+        }),
+    ],
+
+    build: {
+        target: 'esnext',
+        minify: false,
+        cssCodeSplit: false,
+        manifest: true, // اینا کمک می‌کنه dev بهتر شبیه‌سازی بشه (اختیاری)
+    },
+
+    server: {
+        port: 5001,
+        cors: true,                     // حتماً CORS فعال باشه
+        hmr: true,
+        strictPort: true,               // پورت ثابت بمونه
+    },
 })
