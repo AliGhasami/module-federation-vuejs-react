@@ -33,6 +33,7 @@ export default defineConfig({
 })*/
 
 // react-remote/vite.config.js
+/*
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import {federation} from '@module-federation/vite'
@@ -64,3 +65,55 @@ export default defineConfig({
         strictPort: true,               // پورت ثابت بمونه
     },
 })
+*/
+
+
+/*
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import federation from "@originjs/vite-plugin-federation";
+
+export default defineConfig({
+    plugins: [
+        react(),
+        federation({
+            name: "react_remote",
+            filename: "remoteEntry.js",
+            exposes: {
+                "./Button": "./src/Button.jsx",
+            },
+            shared: ["react", "react-dom"],
+        }),
+    ],
+    build: {
+        target: "esnext",
+        minify: false,
+        cssCodeSplit: false,
+    },
+});
+*/
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import federation from "@originjs/vite-plugin-federation";
+
+export default defineConfig({
+    plugins: [
+        react(),
+        federation({
+            name: "react_remote",
+            filename: "remoteEntry.js",
+            exposes: {
+                "./Button": "./src/Button.jsx",
+            },
+            shared: ["react", "react-dom"],
+        }),
+    ],
+    server: {
+        port: 5173,
+        cors: true, // مهم برای dev
+    },
+    build: {
+        target: "esnext",
+    },
+});

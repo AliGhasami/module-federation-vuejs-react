@@ -73,6 +73,7 @@ export default defineConfig({
 */
 
 
+/*
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {federation} from '@module-federation/vite'
@@ -99,4 +100,45 @@ export default defineConfig({
 
   // ... بقیه تنظیمات
 })
+*/
 
+
+/*
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import federation from "@originjs/vite-plugin-federation";
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    federation({
+      name: "vue_host",
+      remotes: {
+        react_remote: "http://localhost:5173/remoteEntry.js",
+      },
+      shared: ["react", "react-dom"],
+    }),
+  ],
+});
+
+*/
+
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import federation from "@originjs/vite-plugin-federation";
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    federation({
+      name: "vue_host",
+      remotes: {
+        react_remote: "http://localhost:5173/remoteEntry.js", // 👈 مهم
+      },
+      shared: ["react", "react-dom"],
+    }),
+  ],
+  server: {
+    port: 5174,
+  },
+});
